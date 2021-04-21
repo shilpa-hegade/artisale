@@ -50,22 +50,22 @@ def list_users():
 
     return jsonify(names)
 
-@app.route('/api/v1/users/<username>',methods=['DELETE'])
-def rem_user(username):
+@app.route('/api/v1/users/<uid>',methods=['DELETE'])
+def rem_user(uid):
     if(request.method != "DELETE"):
         abort(405)    
     f=open("static/users.txt","r")        
     creds=f.readlines()
     #return creds[0]
-    names=[x.split('\t')[0] for x in creds]
+    ids=[x.split('\t')[0] for x in creds]
     #return str(len(names))
-    #return username
-    if username not in names:
+    #return userid
+    if uid not in ids:
         abort(400)
     else:
         reqcred=""
         for cred in creds:
-            if(username==cred.split()[0]):
+            if(uid==cred.split()[0]):
                 reqcred=cred
                 break
         creds.remove(reqcred)
@@ -75,7 +75,7 @@ def rem_user(username):
         f=open("static/users.txt","w")
         f.write(st)
         
-    st="user "+username+" removed successfullly"
+    st="user "+uid+" removed successfullly"
     return str(st),200
 
 
