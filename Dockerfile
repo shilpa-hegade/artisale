@@ -1,25 +1,11 @@
-FROM alpine
+FROM python:3
 
-COPY script.sh /script.sh
+WORKDIR /usr/src/app
 
-COPY proj.py /usr/bin/proj.py
+COPY requirements.txt .
 
-COPY static /usr/bin/static
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["/script.sh"]
+COPY . .
 
-ENV Artisale
-
-#COPY script2.sh /script2.sh
-
-#CMD ["/script2.sh"]
-#ENV PYTHON_PATH=/usr/local/bin/ \
-#    PATH="/usr/local/lib/python$PYTHON_VERSION/bin/:${PATH}"
-
-
-#CMD ["cd","/usr/bin/"]
-
-#CMD ["ls"]
-
-#CMD ["python", "proj.py"]
-
+CMD ["python", "proj.py"]
